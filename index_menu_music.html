@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Song Widget — Inicio</title>
+<style>
+:root{--accent:#1ed760;--rgb:30 215 96}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#020304;color:#fff}
+body{overflow-x:hidden}
+button,input{font:inherit}
+#bg{position:fixed;inset:-80px;background:radial-gradient(circle at 15% 25%,rgb(var(--rgb)/.25),transparent 30%),radial-gradient(circle at 85% 70%,rgb(var(--rgb)/.18),transparent 32%),#020304;filter:blur(18px);transform:scale(1.12);transition:background .7s ease}
+#shade{position:fixed;inset:0;background:linear-gradient(135deg,#020304c8,#020304ec)}
+.light{position:fixed;width:38vw;height:38vw;border-radius:50%;filter:blur(85px);opacity:.3;mix-blend-mode:screen;pointer-events:none;animation:float 12s ease-in-out infinite alternate}
+.l1{left:-12vw;top:-14vw;background:rgb(var(--rgb))}.l2{right:-12vw;bottom:-18vw;background:rgb(var(--rgb));animation-delay:-4s}
+@keyframes float{to{transform:translate(4vw,3vh) scale(1.12)}}
+main{position:relative;z-index:2;min-height:100vh;padding:24px}
+.home{width:min(1180px,94vw);margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.logo{font-size:15px;font-weight:900;letter-spacing:3px}.logo span{color:rgb(var(--rgb))}
+.status{font-size:12px;color:#85878f;letter-spacing:1px}
+.hero{position:relative;overflow:hidden;border:1px solid #ffffff10;border-radius:32px;padding:46px;background:linear-gradient(135deg,#101216ef,#08090cef);box-shadow:0 35px 100px #000b}
+.hero:before{content:"";position:absolute;inset:-35%;background:radial-gradient(circle at 25% 20%,rgb(var(--rgb)/.3),transparent 32%),radial-gradient(circle at 80% 80%,rgb(var(--rgb)/.16),transparent 35%);filter:blur(25px)}
+.kicker{position:relative;z-index:2;font-size:12px;letter-spacing:4px;font-weight:900;color:rgb(var(--rgb));margin-bottom:16px}
+h1{position:relative;z-index:2;font-size:clamp(50px,7vw,88px);line-height:.9;letter-spacing:-4px;margin:0;font-weight:950}
+h1 span{color:rgb(var(--rgb));text-shadow:0 0 40px rgb(var(--rgb)/.28)}
+.subtitle{position:relative;z-index:2;font-size:18px;line-height:1.5;color:#999ba3;max-width:720px;margin:22px 0 30px}
+.launch{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;background:rgb(var(--rgb));color:#050505;font-size:16px;font-weight:900;padding:16px 24px;cursor:pointer;box-shadow:0 0 35px rgb(var(--rgb)/.28);transition:.2s}
+.launch:hover{transform:translateY(-3px);box-shadow:0 0 50px rgb(var(--rgb)/.42)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.panel{border:1px solid #ffffff0d;border-radius:24px;background:#0b0d10d9;backdrop-filter:blur(18px);padding:24px;box-shadow:0 20px 60px #0006}
+.panelTitle{font-size:12px;letter-spacing:3px;color:#7e8088;font-weight:900;margin-bottom:16px}
+.feature{display:flex;gap:18px;align-items:center}
+.art{width:145px;height:145px;border-radius:18px;object-fit:cover;background:#181a1e;box-shadow:0 15px 35px #0008}
+.feature h2{font-size:30px;line-height:1;margin:0 0 8px;letter-spacing:-1px}
+.feature p{margin:0 0 16px;color:#858790;line-height:1.45}
+.smallBtn{border:1px solid rgb(var(--rgb)/.25);background:rgb(var(--rgb)/.1);color:rgb(var(--rgb));border-radius:999px;padding:10px 15px;font-weight:850;cursor:pointer;transition:.2s}
+.smallBtn:hover{background:rgb(var(--rgb)/.2);transform:translateY(-2px)}
+.catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.artistCard{border:1px solid #ffffff0b;border-radius:18px;overflow:hidden;background:#101216;cursor:pointer;transition:.22s}
+.artistCard:hover{transform:translateY(-4px);border-color:rgb(var(--rgb)/.28);box-shadow:0 15px 35px #0006}
+.artistCard img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.artistInfo{padding:13px}.artistInfo b{font-size:15px}.artistInfo span{display:block;color:#70727a;font-size:12px;margin-top:4px}
+.searchPanel{margin-top:16px}
+.searchWrap{display:flex;gap:10px;background:#05060899;border:1px solid #ffffff12;border-radius:17px;padding:9px;transition:.2s}
+.searchWrap:focus-within{border-color:rgb(var(--rgb)/.5);box-shadow:0 0 28px rgb(var(--rgb)/.16)}
+.searchWrap input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:8px 10px;font-size:16px}
+.searchWrap button{border:0;border-radius:12px;background:rgb(var(--rgb));color:#050505;font-weight:900;padding:0 18px;cursor:pointer}
+.searchResults{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.result{display:flex;gap:12px;align-items:center;padding:10px;border:1px solid #ffffff09;border-radius:15px;background:#111318;cursor:pointer}
+.result:hover{border-color:rgb(var(--rgb)/.25);background:#15171b}
+.result img{width:62px;height:62px;border-radius:10px;object-fit:cover}
+.result b{display:block}.result span{display:block;color:#7d7f87;font-size:12px;margin-top:4px}
+.info{margin-top:14px;display:none}.info.show{display:block}
+.infoBox{display:flex;gap:18px}.infoBox img{width:130px;height:130px;object-fit:cover;border-radius:16px}.infoBox h3{font-size:28px;margin:0 0 7px}.infoBox p{color:#888a92;line-height:1.5;margin:0}
+.albums{display:flex;gap:10px;overflow:auto;margin-top:16px;padding-bottom:4px}.albumMini{min-width:110px;width:110px}.albumMini img{width:110px;height:110px;border-radius:12px;object-fit:cover}.albumMini b{font-size:12px;display:block;margin-top:5px}.albumMini span{font-size:11px;color:#66686f}
+.footer{text-align:center;color:#5e6068;font-size:12px;margin:18px 0 5px}
+@media(max-width:800px){main{padding:14px}.hero{padding:34px 24px}.grid{grid-template-columns:1fr}.catalog{grid-template-columns:repeat(3,1fr)}.feature h2{font-size:24px}.art{width:120px;height:120px}}
+@media(max-width:520px){.catalog{grid-template-columns:repeat(2,1fr)}.searchResults{grid-template-columns:1fr}.feature{align-items:flex-start}.art{width:105px;height:105px}.feature h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="shade"></div><div class="light l1"></div><div class="light l2"></div>
+<main><section class="home">
+<div class="top"><div class="logo"><span>●</span> SONG WIDGET</div><div class="status">SPOTIFY EXPERIENCE</div></div>
+
+<div class="hero">
+<div class="kicker">YOUR MUSIC • YOUR WAY</div>
+<h1>Song<br><span>Widget.</span></h1>
+<p class="subtitle">Descubre música, artistas y discos desde una página principal y entra al reproductor cuando quieras.</p>
+<button class="launch" id="launch">Abrir reproductor ▶</button>
+</div>
+
+<div class="grid">
+<section class="panel" id="dailyPanel">
+<div class="panelTitle">💿 DISCO DEL DÍA</div>
+<div class="feature"><img class="art" id="dailyImg" alt=""><div><h2 id="dailyTitle">Cargando…</h2><p id="dailyArtist"></p><button class="smallBtn" id="dailyPlay">▶ Escuchar</button></div></div>
+</section>
+<section class="panel" id="monthlyPanel">
+<div class="panelTitle">⭐ ARTISTA DEL MES</div>
+<div class="feature"><img class="art" id="monthImg" alt=""><div><h2 id="monthTitle">Cargando…</h2><p id="monthText"></p><button class="smallBtn" id="monthPlay">▶ Escuchar</button></div></div>
+</section>
+</div>
+
+<section class="panel searchPanel">
+<div class="panelTitle">🔎 DESCUBRE UN ARTISTA</div>
+<div class="searchWrap"><input id="artistSearch" placeholder="Busca un artista…"><button id="artistSearchBtn">Buscar</button></div>
+<div class="searchResults" id="artistResults"></div>
+<div class="info" id="artistInfo"></div>
+</section>
+
+<section class="panel" style="margin-top:16px">
+<div class="panelTitle">🎤 ARTISTAS Y SUS DISCOS</div>
+<div class="catalog" id="catalog"></div>
+</section>
+
+<div class="footer">Song Widget V2 • Spotify + LRCLIB</div>
+</section></main>
+
+<script>
+const artists=[
+{name:"Michael Jackson",genre:"Pop",image:"",play:"Michael Jackson - Billie Jean",bio:"Uno de los artistas más influyentes de la música pop, conocido por sus grandes espectáculos, videoclips y álbumes como Thriller y Bad.",albums:["Thriller","Bad","Off the Wall"],track:"Billie Jean"},
+{name:"The Weeknd",genre:"R&B / Pop",image:"",play:"The Weeknd - Blinding Lights",bio:"Artista canadiense conocido por mezclar pop, R&B y electrónica con una estética cinematográfica.",albums:["After Hours","Dawn FM","Starboy"],track:"Blinding Lights"},
+{name:"Taylor Swift",genre:"Pop",image:"",play:"Taylor Swift - Cruel Summer",bio:"Cantautora estadounidense que ha recorrido el country, el pop y otros estilos a lo largo de su carrera.",albums:["1989","Midnights","The Tortured Poets Department"],track:"Cruel Summer"},
+{name:"Billie Eilish",genre:"Pop alternativo",image:"",play:"Billie Eilish - BIRDS OF A FEATHER",bio:"Cantante y compositora reconocida por su producción minimalista, voces íntimas y una identidad visual muy marcada.",albums:["WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?","HIT ME HARD AND SOFT","Happier Than Ever"],track:"BIRDS OF A FEATHER"},
+{name:"Ed Sheeran",genre:"Pop",image:"",play:"Ed Sheeran - Thinking Out Loud",bio:"Cantautor británico conocido por combinar pop, folk, acústica y elementos de hip-hop.",albums:["+","x","÷"],track:"Thinking Out Loud"},
+{name:"Dua Lipa",genre:"Pop / Dance",image:"",play:"Dua Lipa - Levitating",bio:"Cantante británica de pop y dance conocida por sus producciones disco-pop y canciones orientadas a la pista de baile.",albums:["Dua Lipa","Future Nostalgia","Radical Optimism"],track:"Levitating"}
+];
+
+const dailyAlbums=[
+["Thriller","Michael Jackson","Michael Jackson - Billie Jean"],
+["After Hours","The Weeknd","The Weeknd - Blinding Lights"],
+["1989","Taylor Swift","Taylor Swift - Blank Space"],
+["HIT ME HARD AND SOFT","Billie Eilish","Billie Eilish - BIRDS OF A FEATHER"],
+["x","Ed Sheeran","Ed Sheeran - Thinking Out Loud"],
+["Future Nostalgia","Dua Lipa","Dua Lipa - Levitating"]
+];
+
+function dayIndex(){
+ const d=new Date(); const key=Math.floor(new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()/86400000);
+ return Math.abs(key)%dailyAlbums.length;
+}
+function monthIndex(){
+ const d=new Date(); const key=d.getFullYear()*12+d.getMonth();
+ return Math.abs(key)%artists.length;
+}
+function artistByName(n){return artists.find(a=>a.name===n)||artists[0]}
+
+async function artworkForArtist(name){
+  try{
+    const r=await fetch("https://itunes.apple.com/search?term="+encodeURIComponent(name)+"&entity=musicArtist&limit=1");
+    const d=await r.json();
+    const x=d.results?.[0];
+    return x?.artworkUrl100?.replace("100x100","600x600")||"";
+  }catch(e){return ""}
+}
+async function artworkForAlbum(album,artist){
+  try{
+    const r=await fetch("https://itunes.apple.com/search?term="+encodeURIComponent(album+" "+artist)+"&entity=album&limit=6");
+    const d=await r.json();
+    const x=(d.results||[]).find(x=>(x.collectionName||"").toLowerCase()===album.toLowerCase())||d.results?.[0];
+    return x?.artworkUrl100?.replace("100x100","1000x1000")||"";
+  }catch(e){return ""}
+}
+async function loadArtwork(){
+  await Promise.all(artists.map(async a=>{a.image=await artworkForArtist(a.name)}));
+  setupFeatured();
+  renderCatalog();
+}
+
+function goPlay(q){
+ sessionStorage.setItem("song_widget_requested_song",q);
+ location.href="player.html";
+}
+
+async function setupFeatured(){
+ const daily=dailyAlbums[dayIndex()], a=artistByName(daily[1]);
+ $("dailyTitle").textContent=daily[0]; $("dailyArtist").textContent=daily[1];
+ $("dailyImg").src=await artworkForAlbum(daily[0],daily[1])||a.image;
+ $("dailyPlay").onclick=()=>goPlay(daily[2]);
+
+ const m=artists[monthIndex()];
+ $("monthTitle").textContent=m.name;
+ $("monthText").textContent=m.genre+" • Artista destacado del mes";
+ $("monthImg").src=m.image;
+ $("monthPlay").onclick=()=>goPlay(m.play);
+}
+function renderCatalog(){
+ $("catalog").innerHTML=artists.map((a,i)=>`
+ <article class="artistCard" data-i="${i}">
+   <img src="${a.image}" alt="">
+   <div class="artistInfo"><b>${a.name}</b><span>${a.genre}</span></div>
+ </article>`).join("");
+ document.querySelectorAll(".artistCard").forEach(c=>c.onclick=()=>showArtist(artists[+c.dataset.i]));
+}
+function showArtist(a){
+ $("artistInfo").classList.add("show");
+ $("artistInfo").innerHTML=`<div class="infoBox"><img src="${a.image}" alt=""><div><h3>${a.name}</h3><p>${a.bio}</p><button class="smallBtn" style="margin-top:12px" onclick="goPlay('${a.play.replace(/'/g,"\\'")}')">▶ Escuchar ${a.track}</button></div></div>
+ <div class="albums">${a.albums.map(x=>`<div class="albumMini"><div style="width:110px;height:110px;border-radius:12px;background:linear-gradient(135deg,rgb(var(--rgb)/.25),#17191d);display:grid;place-items:center;text-align:center;padding:10px">${x}</div><b>${x}</b><span>Álbum</span></div>`).join("")}</div>`;
+}
+async function searchArtist(){
+ const q=$("artistSearch").value.trim(); if(!q)return;
+ $("artistResults").innerHTML='<div style="color:#777">Buscando artista…</div>';
+ try{
+   const r=await fetch("https://itunes.apple.com/search?term="+encodeURIComponent(q)+"&entity=musicArtist&limit=8");
+   const d=await r.json(); const items=(d.results||[]).filter(x=>x.artistName);
+   $("artistResults").innerHTML=items.length?items.map((x,i)=>{
+   const known=artists.find(a=>a.name.toLowerCase()===x.artistName.toLowerCase());
+   const img=known?.image||"";
+   return `<div class="result" data-name="${String(x.artistName).replace(/"/g,"&quot;")}">${img?`<img src="${img}" alt="">`:`<div style="width:62px;height:62px;border-radius:10px;background:linear-gradient(135deg,rgb(var(--rgb)/.25),#17191d);display:grid;place-items:center;font-size:22px">♪</div>`}<div><b>${x.artistName}</b><span>${x.primaryGenreName||"Artista"}</span></div></div>`;
+ }).join(""):'<div style="color:#777;padding:10px">No encontré ese artista.</div>';
+   document.querySelectorAll(".result").forEach(el=>el.onclick=()=>{
+     const name=el.dataset.name; const known=artists.find(a=>a.name.toLowerCase()===name.toLowerCase());
+     if(known) showArtist(known);
+     else{
+       $("artistInfo").classList.add("show");
+       $("artistInfo").innerHTML=`<div class="infoBox"><div style="width:130px;height:130px;border-radius:16px;background:linear-gradient(135deg,rgb(var(--rgb)/.25),#17191d);display:grid;place-items:center;font-size:45px">♪</div><div><h3>${name}</h3><p>Artista encontrado en el catálogo musical. Puedes buscar una canción de este artista desde el reproductor de Spotify.</p><button class="smallBtn" style="margin-top:12px" onclick="goPlay('${name.replace(/'/g,"\\'")}')">▶ Buscar en Spotify</button></div></div>`;
+     }
+   });
+ }catch(e){$("artistResults").innerHTML='<div style="color:#777;padding:10px">No se pudo buscar ahora.</div>'}
+}
+$("launch").onclick=()=>location.href="player.html";
+$("artistSearchBtn").onclick=searchArtist;
+$("artistSearch").addEventListener("keydown",e=>{if(e.key==="Enter")searchArtist()});
+loadArtwork();
+</script>
+</body>
+</html>
