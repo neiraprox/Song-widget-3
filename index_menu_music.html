@@ -99,6 +99,13 @@ h1 span{color:rgb(var(--rgb));text-shadow:0 0 40px rgb(var(--rgb)/.28)}
 </section></main>
 
 <script>
+
+// Spotify returns the OAuth callback to the registered root URL.
+// Hand it to the player without changing the registered Redirect URI.
+if(new URLSearchParams(location.search).get("code")){
+  location.replace("player.html"+location.search);
+}
+
 const artists=[
 {name:"Michael Jackson",genre:"Pop",image:"",play:"Michael Jackson - Billie Jean",bio:"Uno de los artistas más influyentes de la música pop, conocido por sus grandes espectáculos, videoclips y álbumes como Thriller y Bad.",albums:["Thriller","Bad","Off the Wall"],track:"Billie Jean"},
 {name:"The Weeknd",genre:"R&B / Pop",image:"",play:"The Weeknd - Blinding Lights",bio:"Artista canadiense conocido por mezclar pop, R&B y electrónica con una estética cinematográfica.",albums:["After Hours","Dawn FM","Starboy"],track:"Blinding Lights"},
